@@ -24,12 +24,16 @@ class Snake {
                      float scale, int sides);
   void adicionaPonto();
   void restart();
+  void setupModelPoint();
+  void adicionaPontoPoint();
 
   GLuint m_program{};
   GLint m_translationLoc{};
   GLint m_colorLoc{};
   GLint m_scaleLoc{};
   GLint m_rotationLoc{};
+  // Test Point
+  GLint m_pointSizeLoc{};
 
   GLuint m_vao{};
   GLuint m_vbo{};
@@ -42,11 +46,12 @@ class Snake {
   float m_rotation{};
   float m_scale{0.05f};
   // float m_foodScale{0.03f};
-  float m_raio{0.5f * m_scale};
-  int m_sides{35};
+  float m_raio{0.6f * m_scale};
+  int m_sides{15};
   int m_tamanhoMinimo{10};
   int m_point{0};
   int m_pointCondition{40};
+  // float m_pointSize{100};
   // bool in_comidaDisponivel{};
   glm::vec2 m_translation{glm::vec2(0)};
   glm::vec2 m_velocity{glm::vec2(0)};

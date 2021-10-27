@@ -65,6 +65,9 @@ void OpenGLWindow::initializeGL() {
   m_objectsProgramMap = createProgramFromFile(getAssetsPath() + "map.vert",
                                               getAssetsPath() + "objects.frag");
 
+  m_objectsProgramSnakePoint = createProgramFromFile(
+      getAssetsPath() + "snake2.vert", getAssetsPath() + "objects.frag");
+
   abcg::glClearColor(0, 0, 0, 1);
 
 #if !defined(__EMSCRIPTEN__)
@@ -80,6 +83,9 @@ void OpenGLWindow::initializeGL() {
 
 void OpenGLWindow::restart() {
   m_gameData.m_state = State::Playing;
+  // Teste Point
+  // m_snake.initializeGL(m_objectsProgramSnakePoint);
+
   m_snake.initializeGL(m_objectsProgram);
   m_food.initializeGL(m_objectsProgram);
   m_map.initializeGL(m_objectsProgramMap);
@@ -103,8 +109,7 @@ void OpenGLWindow::update() {
     if (m_verifyColisionWaitTimer.elapsed() > 0.5) checkColisionLoseCondition();
     checkCollisions();
     checkWinCondition();
-    // HERE
-    // checkCanDrawWall();
+    checkCanDrawWall();
     checkCanDrawFood();
   }
 }
@@ -228,13 +233,13 @@ void OpenGLWindow::checkColisionLoseCondition() {
   for (int i = 0; i < (static_cast<int>(m_map.m_Wallpositions.size())); i++) {
     const auto distance{
         glm::distance(m_map.m_Wallpositions.at(i), m_snake.m_positions.at(0))};
-    if (distance < m_map.m_scale + m_snake.m_scale) {
+    if (distance < (m_map.m_scale + m_snake.m_scale) * 1.2) {
       m_gameData.m_state = State::GameOver;
       m_restartWaitTimer.restart();
       return;
     }
   }
-  for (int i = (m_snake.m_tamanhoMinimo * 7);
+  for (int i = (m_snake.m_tamanhoMinimo * 8);
        i < (static_cast<int>(m_snake.m_positions.size())); i++) {
     const auto distance{
         glm::distance(m_snake.m_positions.at(i), m_snake.m_positions.at(0))};
