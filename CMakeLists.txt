@@ -1,4 +1,4 @@
-project(snake)
+project(CG-UFABC-SNAKE)
 
 add_executable(${PROJECT_NAME} main.cpp openglwindow.cpp snake.cpp map.cpp food.cpp)
 

@@ -83,6 +83,7 @@ void OpenGLWindow::restart() {
   m_snake.initializeGL(m_objectsProgram);
   m_food.initializeGL(m_objectsProgram);
   m_map.initializeGL(m_objectsProgramMap);
+  m_drawWallWaitTimer.restart();
 }
 
 void OpenGLWindow::update() {
