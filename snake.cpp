@@ -29,7 +29,7 @@ void Snake::restart() {
   m_velocity = glm::vec2(0.6);
   m_positions.emplace_back(0, 0);
   // m_Colors.emplace_back(1, 1, 1);
-  for (int i = 0; i < 3; i++) adicionaPonto();
+  for (int i = 0; i < 10; i++) adicionaPonto();
   // Snake::in_comidaDisponivel = false;
 
   m_point = 0;
@@ -40,43 +40,31 @@ void Snake::paintGL(const GameData &gameData) {
   // fmt::print("Snake: {}\n", m_map.m_teste);
   if (gameData.m_state != State::Playing) return;
   // geraComida();
-  paintOnePoint(m_Colors.at(0), m_Colors.at(0), m_positions[0], m_scale,
-                m_sides);
+  paintOnePoint(m_Colors.at(0), m_Colors.at(0), m_positions[0], m_sides);
 
   for (int i = 1; i < static_cast<int>(m_positions.size()); i++) {
     paintOnePoint(m_Colors.at(i - 1), m_Colors.at(i - 1), m_positions[i],
-                  m_scale, m_sides);
+                  m_sides);
   }
 }
-/**
-void Snake::geraComida() {
-  const glm::vec3 color1{0, 1, 0};
-  const glm::vec3 color2{0, 1, 0};
-  if (Snake::in_comidaDisponivel) {
-    paintOnePoint(color1, color2, m_foodPosition, m_foodScale, 4);
-  } else {
-    std::uniform_real_distribution<float> rd1(-1.0f, 1.0f);
-    const glm::vec2 point{rd1(m_randomEngine), rd1(m_randomEngine)};
 
-    m_foodPosition = point;
-    in_comidaDisponivel = true;
-  }
-}*/
+void Snake::Render(glm::vec2 translation) {}
 
 void Snake::paintOnePoint(glm::vec3 color1, glm::vec3 color2,
-                          glm::vec2 translation, float scale, int sides) {
+                          glm::vec2 translation, int sides) {
   // Test Point
   // setupModelPoint();
   setupModel(color1, color2, sides);
-  // Create a regular polygon with a number of sides in the range [3,20]
 
   abcg::glUseProgram(m_program);
-
+  abcg::glEnable(GL_DEBUG_OUTPUT);
   // Choose a random xy position from (-1,-1) to (1,1)
+
   abcg::glUniform2fv(m_translationLoc, 1, &translation.x);
+
   // abcg::glUniform4fv(m_colorLoc, 1, &m_color.r);
 
-  abcg::glUniform1f(m_scaleLoc, scale);
+  abcg::glUniform1f(m_scaleLoc, m_scale);
   abcg::glUniform1f(m_rotationLoc, m_rotation);
   // Test Point
   // abcg::glUniform1f(m_pointSizeLoc, m_pointSizeLoc);
@@ -87,6 +75,7 @@ void Snake::paintOnePoint(glm::vec3 color1, glm::vec3 color2,
   // abcg::glDrawArrays(GL_POINTS, 0, m_positions.size());
 
   abcg::glDrawArrays(GL_TRIANGLE_FAN, 0, m_sides + 2);
+  // abcg::glDrawArrays(GL_TRIANGLE_STRIP, 0, m_sides + 2);
   abcg::glBindVertexArray(0);
 
   abcg::glUseProgram(0);

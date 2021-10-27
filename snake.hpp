@@ -21,11 +21,12 @@ class Snake {
   void setRotation(float rotation);
   void setupModel(glm::vec3 color1, glm::vec3 color2, int sides);
   void paintOnePoint(glm::vec3 color1, glm::vec3 color2, glm::vec2 translation,
-                     float scale, int sides);
+                     int sides);
   void adicionaPonto();
   void restart();
   void setupModelPoint();
   void adicionaPontoPoint();
+  void Render(glm::vec2 translation);
 
   GLuint m_program{};
   GLint m_translationLoc{};

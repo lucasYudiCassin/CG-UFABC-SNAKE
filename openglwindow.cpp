@@ -66,7 +66,7 @@ void OpenGLWindow::initializeGL() {
                                               getAssetsPath() + "objects.frag");
 
   m_objectsProgramSnakePoint = createProgramFromFile(
-      getAssetsPath() + "snake2.vert", getAssetsPath() + "objects.frag");
+      getAssetsPath() + "snake.vert", getAssetsPath() + "objects.frag");
 
   abcg::glClearColor(0, 0, 0, 1);
 
@@ -84,12 +84,13 @@ void OpenGLWindow::initializeGL() {
 void OpenGLWindow::restart() {
   m_gameData.m_state = State::Playing;
   // Teste Point
-  // m_snake.initializeGL(m_objectsProgramSnakePoint);
+  m_snake.initializeGL(m_objectsProgramSnakePoint);
 
-  m_snake.initializeGL(m_objectsProgram);
+  // m_snake.initializeGL(m_objectsProgram);
   m_food.initializeGL(m_objectsProgram);
   m_map.initializeGL(m_objectsProgramMap);
   m_drawWallWaitTimer.restart();
+  m_verifyColisionWaitTimer.restart();
 }
 
 void OpenGLWindow::update() {
