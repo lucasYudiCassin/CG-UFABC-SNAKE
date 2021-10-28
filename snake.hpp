@@ -24,26 +24,16 @@ class Snake {
                      int sides);
   void adicionaPonto();
   void restart();
-  void setupModelPoint();
-  void adicionaPontoPoint();
-  void Render(glm::vec2 translation);
 
   GLuint m_program{};
   GLint m_translationLoc{};
-  GLint m_colorLoc{};
   GLint m_scaleLoc{};
   GLint m_rotationLoc{};
-  // Test Point
-  GLint m_pointSizeLoc{};
 
   GLuint m_vao{};
   GLuint m_vbo{};
   GLuint m_vboColors{};
 
-  // GLuint m_vboTranslation{};
-  // GLuint m_ebo{};
-
-  glm::vec4 m_color{1};
   float m_rotation{};
   float m_scale{0.05f};
   // float m_foodScale{0.03f};
@@ -52,16 +42,12 @@ class Snake {
   int m_tamanhoMinimo{10};
   int m_point{0};
   int m_pointCondition{40};
-  // float m_pointSize{100};
-  // bool in_comidaDisponivel{};
+
   glm::vec2 m_translation{glm::vec2(0)};
   glm::vec2 m_velocity{glm::vec2(0)};
-  // glm::vec2 m_foodPosition{0, 0};
+
   std::vector<glm::vec2> m_positions;
   std::vector<glm::vec3> m_Colors;
-
-  // abcg::ElapsedTimer m_trailBlinkTimer;
-  // abcg::ElapsedTimer m_bulletCoolDownTimer;
 
   int m_viewportWidth{};
   int m_viewportHeight{};
@@ -71,8 +57,6 @@ class Snake {
  private:
   void changePosition();
   int quadrante(float rotation);
-  // void geraComida();
-  // Map m_map;
 };
 
 #endif

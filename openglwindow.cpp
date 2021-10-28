@@ -8,34 +8,16 @@
 void OpenGLWindow::handleEvent(SDL_Event &event) {
   // Keyboard events
   if (event.type == SDL_KEYDOWN) {
-    if (event.key.keysym.sym == SDLK_UP || event.key.keysym.sym == SDLK_w)
-      m_gameData.m_input.set(static_cast<size_t>(Input::Up));
-    if (event.key.keysym.sym == SDLK_DOWN || event.key.keysym.sym == SDLK_s)
-      m_gameData.m_input.set(static_cast<size_t>(Input::Down));
     if (event.key.keysym.sym == SDLK_LEFT || event.key.keysym.sym == SDLK_a)
       m_gameData.m_input.set(static_cast<size_t>(Input::Left));
     if (event.key.keysym.sym == SDLK_RIGHT || event.key.keysym.sym == SDLK_d)
       m_gameData.m_input.set(static_cast<size_t>(Input::Right));
   }
   if (event.type == SDL_KEYUP) {
-    if (event.key.keysym.sym == SDLK_UP || event.key.keysym.sym == SDLK_w)
-      m_gameData.m_input.reset(static_cast<size_t>(Input::Up));
-    if (event.key.keysym.sym == SDLK_DOWN || event.key.keysym.sym == SDLK_s)
-      m_gameData.m_input.reset(static_cast<size_t>(Input::Down));
     if (event.key.keysym.sym == SDLK_LEFT || event.key.keysym.sym == SDLK_a)
       m_gameData.m_input.reset(static_cast<size_t>(Input::Left));
     if (event.key.keysym.sym == SDLK_RIGHT || event.key.keysym.sym == SDLK_d)
       m_gameData.m_input.reset(static_cast<size_t>(Input::Right));
-  }
-
-  // Mouse events
-  if (event.type == SDL_MOUSEBUTTONDOWN) {
-    if (event.button.button == SDL_BUTTON_RIGHT)
-      m_gameData.m_input.set(static_cast<size_t>(Input::Up));
-  }
-  if (event.type == SDL_MOUSEBUTTONUP) {
-    if (event.button.button == SDL_BUTTON_RIGHT)
-      m_gameData.m_input.reset(static_cast<size_t>(Input::Up));
   }
 
   if (event.type == SDL_MOUSEMOTION) {
@@ -65,10 +47,7 @@ void OpenGLWindow::initializeGL() {
   m_objectsProgramMap = createProgramFromFile(getAssetsPath() + "map.vert",
                                               getAssetsPath() + "objects.frag");
 
-  m_objectsProgramSnakePoint = createProgramFromFile(
-      getAssetsPath() + "snake.vert", getAssetsPath() + "objects.frag");
-
-  abcg::glClearColor(0, 0, 0, 1);
+  abcg::glClearColor(0.2, 0.2, 0.2, 1);
 
 #if !defined(__EMSCRIPTEN__)
   abcg::glEnable(GL_PROGRAM_POINT_SIZE);
@@ -83,10 +62,8 @@ void OpenGLWindow::initializeGL() {
 
 void OpenGLWindow::restart() {
   m_gameData.m_state = State::Playing;
-  // Teste Point
-  m_snake.initializeGL(m_objectsProgramSnakePoint);
 
-  // m_snake.initializeGL(m_objectsProgram);
+  m_snake.initializeGL(m_objectsProgram);
   m_food.initializeGL(m_objectsProgram);
   m_map.initializeGL(m_objectsProgramMap);
   m_drawWallWaitTimer.restart();
@@ -116,7 +93,6 @@ void OpenGLWindow::update() {
 }
 
 void OpenGLWindow::paintGL() {
-  // fmt::print("OPen: {}\n", m_map.m_teste);
   update();
   abcg::glClear(GL_COLOR_BUFFER_BIT);
   abcg::glViewport(0, 0, m_viewportWidth, m_viewportHeight);
@@ -198,13 +174,13 @@ void OpenGLWindow::checkCanDrawWall() {
     const glm::vec2 point{rd1(m_randomEngine), rd1(m_randomEngine)};
 
     const auto distanceFood{glm::distance(point, m_food.m_foodPosition)};
-    if (distanceFood < (m_map.m_scale + m_food.m_foodScale) * 2) {
+    if (distanceFood < (m_map.m_scale + m_food.m_foodScale) * 3) {
       return;
     }
 
     for (int i = 0; i < (static_cast<int>(m_snake.m_positions.size())); i++) {
       const auto distance{glm::distance(m_snake.m_positions.at(i), point)};
-      if (distance < (m_snake.m_scale + m_map.m_scale) * 2) {
+      if (distance < (m_snake.m_scale + m_map.m_scale) * 3) {
         return;
       }
     }
@@ -234,7 +210,7 @@ void OpenGLWindow::checkColisionLoseCondition() {
   for (int i = 0; i < (static_cast<int>(m_map.m_Wallpositions.size())); i++) {
     const auto distance{
         glm::distance(m_map.m_Wallpositions.at(i), m_snake.m_positions.at(0))};
-    if (distance < (m_map.m_scale + m_snake.m_scale) * 1.2) {
+    if (distance < (m_map.m_scale + m_snake.m_scale) * 1.1) {
       m_gameData.m_state = State::GameOver;
       m_restartWaitTimer.restart();
       return;

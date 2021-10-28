@@ -19,16 +19,13 @@ void Map::initializeGL(GLuint program) {
 }
 void Map::restart() { m_Wallpositions.clear(); }
 
-int Map::numberWalls() { return static_cast<int>(m_Wallpositions.size()); }
-
 void Map::paintGL(const GameData &gameData) {
-  m_teste++;
   if (gameData.m_state != State::Playing) return;
 
   const glm::vec3 color1{1, 0, 0};
 
   for (int i = 0; i < static_cast<int>(m_Wallpositions.size()); i++) {
-    paintOnePoint(color1, color1, m_Wallpositions[i], m_scale, 6);
+    paintOnePoint(color1, color1, m_Wallpositions[i], m_scale, m_sides);
   }
 }
 

@@ -48,8 +48,6 @@ void Snake::paintGL(const GameData &gameData) {
   }
 }
 
-void Snake::Render(glm::vec2 translation) {}
-
 void Snake::paintOnePoint(glm::vec3 color1, glm::vec3 color2,
                           glm::vec2 translation, int sides) {
   // Test Point
@@ -141,20 +139,6 @@ int Snake::quadrante(float rotation) {
   return -1;
 }
 
-/**
-void Snake::adicionaPontoPoint() {
-std::uniform_real_distribution<float> rdC(0.00f, 1.00f);
-
-glm::vec3 cor = {
-    glm::vec3{rdC(m_randomEngine), rdC(m_randomEngine), rdC(m_randomEngine)}};
-
-for (int i = 0; i < m_tamanhoMinimo; i++) {
-  glm::vec2 lastPoint = m_positions.at(m_positions.size() - 1);
-  m_positions.push_back(lastPoint + m_raio);
-  m_Colors.push_back(cor);
-}
-}*/
-
 void Snake::adicionaPonto() {
   std::uniform_real_distribution<float> rdC(0.00f, 1.00f);
 
@@ -172,48 +156,6 @@ void Snake::changePosition() {
   if (static_cast<int>(m_positions.size()) > 1) {
     m_positions.pop_back();
   }
-}
-
-void Snake::setupModelPoint() {
-  // Generate VBO
-  abcg::glGenBuffers(1, &m_vbo);
-  abcg::glBindBuffer(GL_ARRAY_BUFFER, m_vbo);
-  abcg::glBufferData(GL_ARRAY_BUFFER, m_positions.size() * sizeof(glm::vec2),
-                     m_positions.data(), GL_STATIC_DRAW);
-  abcg::glBindBuffer(GL_ARRAY_BUFFER, 0);
-
-  // Generate VBO of colors
-  abcg::glGenBuffers(1, &m_vboColors);
-  abcg::glBindBuffer(GL_ARRAY_BUFFER, m_vboColors);
-  abcg::glBufferData(GL_ARRAY_BUFFER, m_Colors.size() * sizeof(glm::vec3),
-                     m_Colors.data(), GL_STATIC_DRAW);
-  abcg::glBindBuffer(GL_ARRAY_BUFFER, 0);
-
-  // Get location of attributes in the program
-  const auto positionAttribute{
-      abcg::glGetAttribLocation(m_program, "inPosition")};
-  const auto colorAttribute{abcg::glGetAttribLocation(m_program, "inColor")};
-
-  // Create VAO
-  abcg::glGenVertexArrays(1, &m_vao);
-
-  // Bind vertex attributes to current VAO
-  abcg::glBindVertexArray(m_vao);
-
-  abcg::glEnableVertexAttribArray(positionAttribute);
-  abcg::glBindBuffer(GL_ARRAY_BUFFER, m_vbo);
-  abcg::glVertexAttribPointer(positionAttribute, 2, GL_FLOAT, GL_FALSE, 0,
-                              nullptr);
-  abcg::glBindBuffer(GL_ARRAY_BUFFER, 0);
-
-  abcg::glEnableVertexAttribArray(colorAttribute);
-  abcg::glBindBuffer(GL_ARRAY_BUFFER, m_vboColors);
-  abcg::glVertexAttribPointer(colorAttribute, 3, GL_FLOAT, GL_FALSE, 0,
-                              nullptr);
-  abcg::glBindBuffer(GL_ARRAY_BUFFER, 0);
-
-  // End of binding to current VAO
-  abcg::glBindVertexArray(0);
 }
 
 void Snake::setupModel(glm::vec3 color1, glm::vec3 color2, int sides) {
