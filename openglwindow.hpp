@@ -23,8 +23,6 @@ class OpenGLWindow : public abcg::OpenGLWindow {
   GLuint m_starsProgram{};
   GLuint m_objectsProgram{};
   GLuint m_objectsProgramMap{};
-  // Test Point
-  GLuint m_objectsProgramSnakePoint{};
 
   int m_viewportWidth{};
   int m_viewportHeight{};

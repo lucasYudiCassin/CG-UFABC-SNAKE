@@ -10,7 +10,6 @@ void Food::initializeGL(GLuint program) {
   terminateGL();
 
   m_program = program;
-  // m_colorLoc = abcg::glGetUniformLocation(m_program, "color");
   m_rotationLoc = abcg::glGetUniformLocation(m_program, "rotation");
   m_scaleLoc = abcg::glGetUniformLocation(m_program, "scale");
   m_translationLoc = abcg::glGetUniformLocation(m_program, "translation");
@@ -39,7 +38,7 @@ void Food::update(float deltaTime) {
 void Food::geraComida() {
   const glm::vec3 color1{0, 1, 0};
   if (Food::in_comidaDisponivel) {
-    paintOnePoint(color1, color1, m_foodPosition, m_foodScale, 4);
+    paintOnePoint(color1, color1, m_foodPosition, m_foodScale, m_sides);
   } else {
     std::uniform_real_distribution<float> rd1(-1.0f, 1.0f);
     const glm::vec2 point{rd1(m_randomEngine), rd1(m_randomEngine)};
@@ -58,7 +57,6 @@ void Food::paintOnePoint(glm::vec3 color1, glm::vec3 color2,
 
   // Choose a random xy position from (-1,-1) to (1,1)
   abcg::glUniform2fv(m_translationLoc, 1, &translation.x);
-  // abcg::glUniform4fv(m_colorLoc, 1, &m_color.r);
   abcg::glUniform1f(m_scaleLoc, scale);
   abcg::glUniform1f(m_rotationLoc, m_rotation);
 

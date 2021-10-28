@@ -21,7 +21,6 @@ class Map {
                      float scale, int sides);
 
   void restart();
-  int numberWalls();
 
   GLuint m_program{};
   GLint m_translationLoc{};
@@ -32,12 +31,9 @@ class Map {
   GLuint m_vboColors{};
 
   float m_scale{0.05f};
-  int m_sides{35};
-  int m_teste{-1};
-  std::vector<glm::vec2> m_Wallpositions;
+  int m_sides{6};
 
-  abcg::ElapsedTimer m_trailBlinkTimer;
-  abcg::ElapsedTimer m_bulletCoolDownTimer;
+  std::vector<glm::vec2> m_Wallpositions;
 
   int m_viewportWidth{};
   int m_viewportHeight{};
