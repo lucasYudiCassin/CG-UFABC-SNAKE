@@ -147,7 +147,7 @@ void Snake::adicionaPonto() {
 
   for (int i = 0; i < m_tamanhoMinimo; i++) {
     glm::vec2 lastPoint = m_positions.at(m_positions.size() - 1);
-    m_positions.push_back(lastPoint + m_raio);
+    m_positions.push_back(lastPoint);
     m_Colors.push_back(cor);
   }
 }

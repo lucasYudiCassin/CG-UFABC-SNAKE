@@ -37,11 +37,11 @@ class Snake {
   float m_rotation{};
   float m_scale{0.05f};
   // float m_foodScale{0.03f};
-  float m_raio{0.6f * m_scale};
-  int m_sides{15};
-  int m_tamanhoMinimo{10};
+  // float m_raio{0.6f * m_scale};
+  int m_sides{13};
+  int m_tamanhoMinimo{6};
   int m_point{0};
-  int m_pointCondition{40};
+  int m_pointCondition{20};
 
   glm::vec2 m_translation{glm::vec2(0)};
   glm::vec2 m_velocity{glm::vec2(0)};

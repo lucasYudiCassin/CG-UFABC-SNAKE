@@ -158,8 +158,7 @@ void OpenGLWindow::checkCanDrawFood() {
   }
 
   if (m_food.in_comidaDisponivel) {
-    for (int i = m_snake.m_tamanhoMinimo;
-         i < (static_cast<int>(m_snake.m_positions.size())); i++) {
+    for (int i = 100; i < (static_cast<int>(m_snake.m_positions.size())); i++) {
       const auto distance{
           glm::distance(m_snake.m_positions.at(i), m_food.m_foodPosition)};
       if (distance < m_snake.m_scale + m_food.m_foodScale) {
@@ -170,7 +169,7 @@ void OpenGLWindow::checkCanDrawFood() {
 }
 
 void OpenGLWindow::checkCanDrawWall() {
-  if (m_drawWallWaitTimer.elapsed() > 5) {
+  if (m_drawWallWaitTimer.elapsed() > 3) {
     std::uniform_real_distribution<float> rd1(-1.0f, 1.0f);
     const glm::vec2 point{rd1(m_randomEngine), rd1(m_randomEngine)};
 
@@ -217,8 +216,7 @@ void OpenGLWindow::checkColisionLoseCondition() {
       return;
     }
   }
-  for (int i = (m_snake.m_tamanhoMinimo * 8);
-       i < (static_cast<int>(m_snake.m_positions.size())); i++) {
+  for (int i = (100); i < (static_cast<int>(m_snake.m_positions.size())); i++) {
     const auto distance{
         glm::distance(m_snake.m_positions.at(i), m_snake.m_positions.at(0))};
     if (distance < (m_snake.m_scale * 2)) {
