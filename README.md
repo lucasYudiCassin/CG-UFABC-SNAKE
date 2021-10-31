@@ -7,7 +7,7 @@ Jogo baseado no clássico snake e no [slither.io](http://slither.io/)
 **[Clique aqui para jogar!](https://lucasyudicassin.github.io/snakeCG/)**
 
 Desenvolvido pelos alunos:
- - Fernando Kenji - RA:
+ - Fernando Kenji - RA: 11201722146
  - Lucas Yudi - RA: 11201812210
 
 # Dependência
