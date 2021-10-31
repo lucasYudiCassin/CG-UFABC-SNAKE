@@ -37,8 +37,7 @@ class Snake {
   float m_scale{0.05f};
   int m_sides{13};
   int m_tamanhoMinimo{6};
-  int m_score{0};
-  int m_scoreLimit{20};
+
   bool m_ateFood{};
 
   glm::vec2 m_velocity{glm::vec2(0)};

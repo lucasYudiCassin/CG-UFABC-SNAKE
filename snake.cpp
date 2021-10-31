@@ -27,7 +27,6 @@ void Snake::initializeGL(GLuint program) {
   m_snake.emplace_back(point);
   m_snake.emplace_back(point);
   m_snake.emplace_back(point);
-  m_score = 0;
   m_ateFood = false;
 
   std::vector<glm::vec2> position(0);
@@ -113,7 +112,6 @@ void Snake::update(const GameData &gameData, float deltaTime) {
 
   if (m_ateFood) {
     m_ateFood = false;
-    m_score++;
   } else {
     m_snake.pop_back();
   }
