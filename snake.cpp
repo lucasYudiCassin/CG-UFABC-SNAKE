@@ -19,13 +19,13 @@ void Snake::initializeGL(GLuint program) {
   m_snake.clear();
   m_rotation = 0.0f;
   m_velocity = glm::vec2(0.6);
+  std::uniform_real_distribution<float> rdC(0.00f, 1.00f);
+  m_snakeColor = {
+      glm::vec3{rdC(m_randomEngine), rdC(m_randomEngine), rdC(m_randomEngine)}};
   Point point{
       .m_translation = glm::vec2(0, 0),
-      .m_color = glm::vec3(0, 1, 0),
+      .m_color = m_snakeColor,
   };
-  m_snake.emplace_back(point);
-  m_snake.emplace_back(point);
-  m_snake.emplace_back(point);
   m_snake.emplace_back(point);
   m_ateFood = false;
 
@@ -103,16 +103,27 @@ void Snake::update(const GameData &gameData, float deltaTime) {
   glm::vec2 forward = glm::rotate(glm::vec2{0.0f, 1.0f}, m_rotation);
   glm::vec2 increment = m_velocity * forward * deltaTime;
   glm::vec2 newHead = m_snake.at(0).m_translation + increment;
+
   Point point{
       .m_translation = newHead,
-      // TODO: Change point color.
-      .m_color = m_snake.back().m_color,
+      .m_color = m_snakeColor,
   };
+
+  Point pointExtra{
+      .m_translation = m_snake.at(m_snake.size() - 1).m_translation,
+      .m_color = m_snakeColor,
+  };
+  m_snake.insert(m_snake.begin(), pointExtra);
+  m_snake.insert(m_snake.begin(), pointExtra);
+  m_snake.insert(m_snake.begin(), pointExtra);
   m_snake.insert(m_snake.begin(), point);
 
   if (m_ateFood) {
     m_ateFood = false;
   } else {
+    m_snake.pop_back();
+    m_snake.pop_back();
+    m_snake.pop_back();
     m_snake.pop_back();
   }
 

@@ -11,7 +11,7 @@ int main(int argc, char **argv) {
     window->setOpenGLSettings({.samples = 4});
     window->setWindowSettings({.width = 600,
                                .height = 600,
-                               .showFPS = true,
+                               .showFPS = false,
                                .showFullscreenButton = false,
                                .title = "Snake"});
     app.run(std::move(window));

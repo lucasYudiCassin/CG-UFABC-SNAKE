@@ -18,7 +18,6 @@ class Snake {
 
   void update(const GameData &gameData, float deltaTime);
   void setRotation(float rotation);
-  void incrementSize(float deltaTime);
   void restart();
 
  private:
@@ -47,6 +46,7 @@ class Snake {
     glm::vec3 m_color;
   } __attribute__((aligned(32)));
   std::vector<Point> m_snake;
+  glm::vec3 m_snakeColor;
   std::default_random_engine m_randomEngine;
 };
 

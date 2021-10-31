@@ -35,6 +35,7 @@ void OpenGLWindow::initializeGL() {
   ImGuiIO &io{ImGui::GetIO()};
   const auto filename{getAssetsPath() + "Inconsolata-Medium.ttf"};
   m_font = io.Fonts->AddFontFromFileTTF(filename.c_str(), 60.0f);
+  m_fontScore = io.Fonts->AddFontFromFileTTF(filename.c_str(), 20.0f);
   if (m_font == nullptr) {
     throw abcg::Exception{abcg::Exception::Runtime("Cannot load font file")};
   }
@@ -111,25 +112,44 @@ void OpenGLWindow::paintUI() {
   abcg::OpenGLWindow::paintUI();
 
   {
-    const auto size{ImVec2(330, 85)};
-    const auto position{ImVec2((m_viewportWidth - size.x) / 2.0f,
-                               (m_viewportHeight - size.y) / 2.0f)};
-    ImGui::SetNextWindowPos(position);
-    ImGui::SetNextWindowSize(size);
-    ImGuiWindowFlags flags{ImGuiWindowFlags_NoBackground |
-                           ImGuiWindowFlags_NoTitleBar |
-                           ImGuiWindowFlags_NoInputs};
-    ImGui::Begin(" ", nullptr, flags);
-    ImGui::PushFont(m_font);
+    if (m_gameData.m_state == State::Playing) {
+      const auto size{ImVec2(300, 85)};
+      // const auto position{ImVec2((1 - size.x), (1 - size.y))};
+      const auto position{ImVec2(0, 0)};
+      ImGui::SetNextWindowPos(position);
+      ImGui::SetNextWindowSize(size);
+      ImGuiWindowFlags flags{ImGuiWindowFlags_NoBackground |
+                             ImGuiWindowFlags_NoTitleBar |
+                             ImGuiWindowFlags_NoInputs};
+      ImGui::Begin(" ", nullptr, flags);
+      ImGui::PushFont(m_fontScore);
 
-    if (m_gameData.m_state == State::GameOver) {
-      ImGui::Text("Fim de jogo");
-    } else if (m_gameData.m_state == State::Win) {
-      ImGui::Text("Voce Venceu");
+      ImGui::Text("Score: %d / %d", m_gameData.m_score,
+                  m_gameData.m_scoreLimit);
+
+      ImGui::PopFont();
+      ImGui::End();
+    } else {
+      const auto size{ImVec2(330, 85)};
+      const auto position{ImVec2((m_viewportWidth - size.x) / 2.0f,
+                                 (m_viewportHeight - size.y) / 2.0f)};
+      ImGui::SetNextWindowPos(position);
+      ImGui::SetNextWindowSize(size);
+      ImGuiWindowFlags flags{ImGuiWindowFlags_NoBackground |
+                             ImGuiWindowFlags_NoTitleBar |
+                             ImGuiWindowFlags_NoInputs};
+      ImGui::Begin(" ", nullptr, flags);
+      ImGui::PushFont(m_font);
+
+      if (m_gameData.m_state == State::GameOver) {
+        ImGui::Text("Fim de jogo");
+      } else if (m_gameData.m_state == State::Win) {
+        ImGui::Text("Você Venceu");
+      }
+
+      ImGui::PopFont();
+      ImGui::End();
     }
-
-    ImGui::PopFont();
-    ImGui::End();
   }
 }
 
@@ -186,8 +206,8 @@ bool OpenGLWindow::canDrawWallInTranslation(glm::vec2 wallTranslation) {
 }
 
 void OpenGLWindow::checkDrawWall() {
-  if (m_drawWallWaitTimer.elapsed() > 3) {
-    std::uniform_real_distribution<float> rd1(-1.0f, 1.0f);
+  if (m_drawWallWaitTimer.elapsed() > 4) {
+    std::uniform_real_distribution<float> rd1(-0.9f, 0.9f);
     const glm::vec2 wallTranslation{rd1(m_randomEngine), rd1(m_randomEngine)};
 
     if (canDrawWallInTranslation(wallTranslation)) {
@@ -234,16 +254,6 @@ void OpenGLWindow::checkCollisionLoseCondition() {
       return;
     }
   }
-  // TODO: Collision with snake.
-  // for (const auto &point : m_snake.m_snake) {
-  //   const auto distance{glm::distance(point.m_translation,
-  //                                     m_snake.m_snake.front().m_translation)};
-  //   if (distance < (m_snake.m_scale * 2)) {
-  //     m_gameData.m_state = State::GameOver;
-  //     m_restartWaitTimer.restart();
-  //     return;
-  //   }
-  // }
 }
 
 void OpenGLWindow::checkWinCondition() {

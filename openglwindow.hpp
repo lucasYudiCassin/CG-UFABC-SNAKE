@@ -40,6 +40,7 @@ class OpenGLWindow : public abcg::OpenGLWindow {
   abcg::ElapsedTimer m_verifyColisionWaitTimer;
 
   ImFont* m_font{};
+  ImFont* m_fontScore{};
 
   std::default_random_engine m_randomEngine;
 
