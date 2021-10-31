@@ -7,8 +7,8 @@
 
 #include "abcg.hpp"
 #include "food.hpp"
-#include "map.hpp"
 #include "snake.hpp"
+#include "wall.hpp"
 
 class OpenGLWindow : public abcg::OpenGLWindow {
  protected:
@@ -20,16 +20,19 @@ class OpenGLWindow : public abcg::OpenGLWindow {
   void terminateGL() override;
 
  private:
-  GLuint m_starsProgram{};
+  friend Walls;
+  friend Food;
+  friend Snake;
+
   GLuint m_objectsProgram{};
-  GLuint m_objectsProgramMap{};
+  GLuint m_wallsProgram{};
 
   int m_viewportWidth{};
   int m_viewportHeight{};
 
   GameData m_gameData;
   Snake m_snake;
-  Map m_map;
+  Walls m_walls;
   Food m_food;
 
   abcg::ElapsedTimer m_restartWaitTimer;
@@ -42,9 +45,12 @@ class OpenGLWindow : public abcg::OpenGLWindow {
 
   void checkCollisions();
   void checkWinCondition();
-  void checkCanDrawFood();
-  void checkColisionLoseCondition();
-  void checkCanDrawWall();
+  void checkCollisionLoseCondition();
+  void checkDrawWall();
+  void checkDrawFood();
+
+  bool canDrawFoodInTranslation(glm::vec2 foodTranslation);
+  bool canDrawWallInTranslation(glm::vec2 wallTranslation);
 
   void restart();
   void update();
