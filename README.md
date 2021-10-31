@@ -13,6 +13,7 @@ Desenvolvido pelos alunos:
 # Dependência
 
 Foi utilizada a biblioteca [ABCg](https://github.com/hbatagelo/abcg)
+
 Desenvolvida por Harlen Batagelo
 
 
@@ -26,9 +27,9 @@ Utilize as setas para direita  `→`  e esquerda  `←` , ou as teclas `a` e `d`
 ## Tela
 Na tela do jogo, os losangos vermelhos rodando, são as `comidas`
 
-Os `obstaculos` são os polígonos azuis, eles aparecem aleatoriamente de tempo em tempo
+Os `obstáculos` são os polígonos azuis, eles aparecem aleatoriamente de tempo em tempo
 
-No canto superior esquerdo esta o `placar` e o `objetivo`
+No canto superior esquerdo está o `placar` e o `objetivo`
 
 A cobra muda de cor toda vez que o jogo é reiniciado
 
